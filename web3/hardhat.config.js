@@ -12,11 +12,12 @@ module.exports = {
     },
   },
   networks: {
-    zksync_testnet: {
-      url: "https://zksync2-testnet.zksync.dev",
-      ethNetwork: "goerli",
-      chainId: 280,
-      zksync: true,
+    fuji_testnet: {
+      url: "https://avalanche-fuji.infura.io/v3/9c0ea514ddc040059a5426506c2f12ed",
+      // ethNetwork: "goerli",
+      // chainId: 280,
+      // zksync: true,
+      accounts:[`ab29675743def0dcf4e8ac4fc40e69ac6d2839b90507fe95c66112926577cddd`]
     },
     zksync_mainnet: {
       url: "https://zksync2-mainnet.zksync.io/",
