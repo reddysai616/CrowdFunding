@@ -3,34 +3,34 @@ import { createCampaign, dashboard, logout, payment, profile, withdraw } from '.
 export const navlinks = [
   {
     name: 'dashboard',
-    imgUrl: dashboard,
+    imgurl: dashboard,
     link: '/',
   },
   {
     name: 'campaign',
-    imgUrl: createCampaign,
+    imgurl: createCampaign,
     link: '/create-campaign',
   },
   {
     name: 'payment',
-    imgUrl: payment,
+    imgurl: payment,
     link: '/',
     disabled: true,
   },
   {
     name: 'withdraw',
-    imgUrl: withdraw,
+    imgurl: withdraw,
     link: '/',
     disabled: true,
   },
   {
     name: 'profile',
-    imgUrl: profile,
+    imgurl: profile,
     link: '/profile',
   },
   {
     name: 'logout',
-    imgUrl: logout,
+    imgurl: logout,
     link: '/',
     disabled: true,
   },

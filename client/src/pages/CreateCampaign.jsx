@@ -15,14 +15,19 @@ const CreateCampaign = () => {
     target:'',
     deadline:'',
     image:'',
+
   });
   const handleFormFieldChange = (fieldName , e)=>{
-    setForm({...form , [fieldName]: e.traget.vale})
+    setForm({ ...form , [fieldName]: e.target.value})
 
   }
-  const handleSubmit= () => {
+  const handleSubmit= async (e) => {
+    e.preventDefault();
+    console.log(form)
     
   }
+
+ 
   return (
     <div className='bg-[#1c1c24] flex justify-center items-center flex-col rounded-[10px] sm:p-10 p-4'>
       {isLoading && 'Loading...'}
@@ -37,14 +42,16 @@ LableName = "Your Name *"
 placeholder="Sai Kiran"
 inputType="text"
 value={form.name}
-handleChange={()=>{}}
+handleChange={(e)=> handleFormFieldChange('name' , e)}
 />
 <FormField
 LableName = "Your Title *"
 placeholder="Sai Kiran"
 inputType="text"
 value={form.title}
-handleChange={()=>{}}
+
+handleChange={(e)=> handleFormFieldChange('title' , e)}
+
 />
 </div>
 <FormField
@@ -52,7 +59,8 @@ LableName = "Story Title *"
 placeholder="Write your story"
 isTextArea
 value={form.description}
-handleChange={()=>{}}
+handleChange={(e)=> handleFormFieldChange('description' , e)}
+
 />
 
 <div className='w-full flex justify-start items-center p-4 bg-[#8c6dfd] h-[120px] rounded-[10px]'>
@@ -67,15 +75,27 @@ LableName = "Goal *"
 placeholder="ETH 0.50"
 inputType="text"
 value={form.target}
-handleChange={()=>{}}
+handleChange={(e)=> handleFormFieldChange('target' , e)}
+
 />
 <FormField
 LableName = "End Date *"
 placeholder="End Date"
 inputType="date"
 value={form.deadline}
-handleChange={()=>{}}
+handleChange={(e)=> handleFormFieldChange('deadline' , e)}
+
 />
+<FormField
+LableName = "Campaign Image *"
+placeholder="Paste your image url"
+inputType="url"
+value={form.image}
+handleChange={(e)=> handleFormFieldChange('image' , e)}
+
+/>
+
+</div>
 <div className='flex justify-center items-center mt-[40px]'>
   <CustomButton
   btnType='submit'
@@ -83,7 +103,6 @@ handleChange={()=>{}}
   styles="bg-[#1dc071]"
   />
 
-</div>
 </div>
 
 </form>
