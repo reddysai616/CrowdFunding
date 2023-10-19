@@ -4,9 +4,10 @@ const CustomButton = ({btnType , styles,handleClick , title}) => {
   return (
    <button 
    type={btnType}
-    className={` font-epilogue font-semibold text-[16px] leading-6 text-white rounded-xl${styles}`}
+   className={`font-epilogue font-semibold text-[16px] leading-[26px] text-white min-h-[52px] px-4 rounded-[10px] ${styles}`}
     onclick={handleClick}
    >
+
     {title}
    </button>
   )
