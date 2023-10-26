@@ -3,12 +3,14 @@ import {Link , useNavigate} from 'react-router-dom';
 import {CustomButton} from './'
 import {logo , menu ,search , thirdweb} from '../assets'
 import { navlinks } from '../constants';
+import { useStateContext } from '../context';
 
 const NavBar = () => {
   const navigate = useNavigate();
   const [isActive , setIsActive] = useState('dashboard');
   const [toggledrawer , setToggleDrawer] = useState(false);
-  const address = '0xssaw'
+  // const address = '0xssaw'
+  const {address , connect} = useStateContext();
   return (
     <div className='flex md:flex-row flex-col-reverse justify-between mb-[35px] gap-6'>
       <div className='lg:flex-1 flex flex-row max-w-[458px] py-2 pl-4 pr-2h-[52px] bg-[#1c1c24] rounded-[100px]'>
@@ -37,7 +39,7 @@ const NavBar = () => {
 {/* small screen navigation */}
 <div className='sm:hidden flex justify-between items-center relative'>
 <div className='w-[40px] h-[40px] bg-[#2c2f32] flex justify-center items-center rounded-[10px] cursor-pointer'>
-  <img src={thirdweb} className='w-[60%] object-contain h-[60%]' alt='user'/>
+  <img src={logo} className='w-[60%] object-contain h-[60%]' alt='user'/>
 </div>
 <img src={menu} alt='menu' className='w-[34px] h-[34px] object-contain cursor-pointer' onClick={()=>setToggleDrawer((prev) => !prev)}/>
 <div className={`absolute top-[60px] right-0 left-0 bg-[#1c1c24] z-10 shadow-secondary py-4 ${!toggledrawer ? '-translate-y-[100vh]' : 'translate-y-0'} transition-all duration-700`}>
@@ -75,7 +77,7 @@ title={address ? 'Create a campaign' : 'Connect'}
 styles={address ? 'bg-[#1dc071]' : 'bg-[#8c6dfd]'}
 handleClick={() =>{
   if(address) navigate('create-campaign')
-  else 'connect()'
+  else connect()
 }}
 />
   </div>
