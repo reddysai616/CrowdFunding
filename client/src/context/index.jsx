@@ -31,9 +31,29 @@ export const StateContextProvider = ({ children }) => {
       console.log("contract call failure", error)
     }
   }
+const getCampaign = async () => {
+  const campaigns = await contract.call('getCampaign')
+  const parsedCampaign = campaigns.map((campaign , i) => ({
+    owner:campaign.owner,
+    title: campaign.title,
+    description: campaign.description,
+    target: ethers.utils.formatEther(campaign.target.toString()),
+    deadline:campaign.deadline.toNumber(),
+    amountCollected:ethers.utils.formatEther(campaign.amountCollected.toString()),
+    image:campaign.image,
+    pId:i
 
+  }))
+return parsedCampaign
+}
 
-
+const getUserCampaign = async () => {
+  const  allCampaign = await getCampaign();
+  const filteredCampaigns = allCampaign.filter( (campaign) => 
+    campaign.owner === address
+  )
+  return  filteredCampaigns
+}
 
 
   return (
@@ -44,6 +64,8 @@ export const StateContextProvider = ({ children }) => {
         connect,
        
         createCampaign: publishCampaign,
+        getCampaign,
+        getUserCampaign,
 
       }}
     >
