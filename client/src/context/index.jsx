@@ -55,7 +55,23 @@ const getUserCampaign = async () => {
   return  filteredCampaigns
 }
 
+const donate =  async (pId , amount) => {
+  const data = await contract.call('donateToCampaign' , pId, address , amount)
 
+return data;
+}
+
+const getDonations = async(pId) => {
+  const donations = await contract.call('getDonators', pId)
+  const numberOfDonation = donations[0].length;
+  const parsedDonation = [];
+  for (let i =0; i<numberOfDonation; i++){
+    parsedDonation.push({
+      donator:donations[0][i],
+      donation:ethers.formatEther(donations[1][i]).toString()
+    })
+  }
+}
   return (
     <StateContext.Provider
       value={{ 
@@ -66,6 +82,7 @@ const getUserCampaign = async () => {
         createCampaign: publishCampaign,
         getCampaign,
         getUserCampaign,
+        donate,
 
       }}
     >
