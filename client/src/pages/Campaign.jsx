@@ -1,28 +1,43 @@
 import React , {useState , useEffect} from 'react'
-import { useLocation } from 'react-router-dom'
+import {  useLocation , useNavigate } from 'react-router-dom'
 import { ethers } from 'ethers'
 import { useStateContext } from '../context'
-import { CustomButton } from '../components'
+import { CustomButton, Loader } from '../components'
 import { calculateBarPercentage , daysLeft } from '../utils' 
 import { tagType , thirdweb } from '../assets'
 import CountBox from '../components/CountBox'
 
 const Campaign = () => {
 const {state} = useLocation();
-const {getDonations , contract , address} = useStateContext();
-
+const {getDonations ,donate , contract , address} = useStateContext();
+const navigate = useNavigate();
 const [isLoading , setIsLoading] = useState(false);
 const [amount , setAmount] = useState('');
 const [donators , setDonators] = useState([])
 const remainingDays = daysLeft(state.deadline);
 console.log(state , 'Campaign');
-const handleDonate = (() => {
-  console.log(state , 'empty');
-})
+
+const fetchDonators = async () => {
+  const data = await getDonations(state.pId)
+  setDonators(data)
+}
+useEffect(()=>{
+  if(contract) fetchDonators()
+
+},[contract , address])
+
+const handleDonate = async () => {
+  // console.log(state , 'empty');
+  setIsLoading(true);
+  await donate(state.pId , amount);
+  navigate('/')
+  setIsLoading(false);
+}
+console.log(donators , 'loading');
 
   return (
     <div>
-      {isLoading && 'loading...'}
+      {isLoading && <Loader/>}
       <div className='w-full flex md:flex-row flex-col mt-10 gap-[30px]'>
       <div className='flex-1 flex-col'>
         <img src={state.image} alt="campaign" className='object-cover rounded-xl h-[410px] w-full' />
@@ -74,7 +89,10 @@ const handleDonate = (() => {
       <h4 className='font-epilogue font-semibold text-[18px] text-white  uppercase'>Donators</h4>
    <div className='mt-[20px] flex'>
    {donators.length >0 ? donators.map((item , index) => (
-<div> Donator</div>
+<div className='flex justify-between gap-[40px]'> 
+   <p className='font-epilogue font-semibold text-[16px] text-white  uppercase'> {index + 1 }. {item.donator}</p> 
+   <p className='font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] '>{item.donation}</p>
+</div>
    )) : (  <p className='font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify'>
   Be the first person to donate
  </p>)}
